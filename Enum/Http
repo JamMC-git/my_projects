@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct HttpStatus {
+    int code;
+    string message;
+
+    static const HttpStatus OK;
+    static const HttpStatus BAD_REQUEST;
+    static const HttpStatus NOT_FOUND;
+    static const HttpStatus INTERNAL_SERVER_ERROR;
+
+    bool isSuccess() const {
+        // Return true if code < 400
+        return false;
+    }
+
+    void display() const {
+        // Print: "CODE MESSAGE" e.g. "200 OK"
+    }
+
+    static const HttpStatus* fromCode(int code) {
+        // Return pointer to HttpStatus matching the code, or nullptr if not found
+        return nullptr;
+    }
+
+    static const vector<const HttpStatus*>& values() {
+        static vector<const HttpStatus*> v = {&OK, &BAD_REQUEST, &NOT_FOUND, &INTERNAL_SERVER_ERROR};
+        return v;
+    }
+};
+
+// Set correct values: OK(200, "OK"), BAD_REQUEST(400, "Bad Request"),
+// NOT_FOUND(404, "Not Found"), INTERNAL_SERVER_ERROR(500, "Internal Server Error")
+const HttpStatus HttpStatus::OK{0, ""};
+const HttpStatus HttpStatus::BAD_REQUEST{0, ""};
+const HttpStatus HttpStatus::NOT_FOUND{0, ""};
+const HttpStatus HttpStatus::INTERNAL_SERVER_ERROR{0, ""};
+
+int main() {
+    HttpStatus::OK.display();
+    HttpStatus::NOT_FOUND.display();
+
+    cout << "Is 200 success? " << (HttpStatus::OK.isSuccess() ? "true" : "false") << endl;
+    cout << "Is 404 success? " << (HttpStatus::NOT_FOUND.isSuccess() ? "true" : "false") << endl;
+
+    const HttpStatus* found = HttpStatus::fromCode(500);
+    if (found != nullptr) {
+        cout << "Found by code 500: ";
+        found->display();
+    }
+    return 0;
+}
