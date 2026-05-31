@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+//TrafficLight built on enum class
 enum class TrafficLight {RED,YELLOW,GREEN};
 
 TrafficLight next(TrafficLight light)
